@@ -1,15 +1,15 @@
 # programmer ATmega328P
 
-compile C code to hex with avr-gcc and avr-objcopy
+Compile C code to hex with ```avr-gcc``` and ```avr-objcopy```
 ```
-sh avr-hex.sh [filename]
+sh compile-hex.sh [filename exclude .c]
 ```
-upload code to ATmega328P with avrdude
+Upload code to ATmega328P with ```avrdude```
 ```
-sh avr-upload.sh [filename]
+sh usbasp-upload.sh [filename exclude .hex]
 ```
 Read fuse bit and save to file [hbit.hex, lbit.hex, ebit.h] with avrdude
 
 ```
-sh avr-rfuse.sh
+sh usbasp-readFuse.sh
 ```

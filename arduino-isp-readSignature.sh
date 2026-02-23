@@ -1,0 +1,1 @@
+avrdude -c arduino -P /dev/cu.usbserial-1310 -p m328p -b 19200 -v
