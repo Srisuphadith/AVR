@@ -4,21 +4,25 @@
 #include <util/delay.h>
 void main()
 {
-    //Input pull-up
+    // Input pull-up
     PORTD |= 0x03;
-    //Output LED
+    // Output LED
     DDRB |= 0x02;
     while (1)
     {
-        _delay_ms(50);
-        if(!(PIND & 0x01)){
-            PORTB ^= 0x02;
+        // Normal is 1 if press will be 0
+        // (0(touch) AND 1 ) == 0
+        while ((PIND & 0x01) && (PIND & 0x02))
+        {
+            _delay_ms(50);
         }
-        while(!(PIND & 0x01));
-        _delay_ms(50);
-        if(!(PIND & 0x02)){
-            PORTB ^= 0x02;
+
+        PORTB ^= 0x02; // ON-OFF LED
+
+        // ~(0(touch) AND 1 ) == ~0 == 1
+        while (!((PIND & 0x01) && (PIND & 0x02)))
+        {
+            _delay_ms(50);
         }
-        while(!(PIND & 0x02));
     }
 }
