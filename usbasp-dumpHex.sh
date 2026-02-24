@@ -1,1 +1,0 @@
-avrdude -c usbasp -p m328p -U flash:r:dump.hex:i
