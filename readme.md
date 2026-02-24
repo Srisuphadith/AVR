@@ -1,4 +1,4 @@
-# programmer ATmega328P
+# Programmer ATmega328P
 ---
 # dependency
 - Windowns OS
