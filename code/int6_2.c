@@ -2,6 +2,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <avr/interrupt.h>
 // E PD5 /RS PD6
 void pushData(){
  	PORTD |= 0x20;
@@ -47,13 +49,32 @@ void lcdLine2(){
 void lcdClear(){
 	sendData(0x01,0);
 }
+
+void ANALOG_input(){
+	//ADMUX |= (1<<REFS1);
+	ADMUX |= (1<<REFS0);
+	ADCSRA |= (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0) | (1<<ADIE);
+
+	ADMUX |= 0x05;
+}
+ISR(ADC_vect){
+	uint16_t data = ADC;
+	// int to str
+	char buffer[10];
+	itoa(data, buffer, 10);
+	lcdPrintString(buffer);
+	_delay_ms(500);
+	lcdClear();
+}
 int main(){
+	// PORTC |= (1 << PC5);
+	sei();
     DDRD |= 0x6F;
+	ANALOG_input();
     lcdInit();
     lcdPrintString("Hello world");
-    
     while (1)
     {
-     
-    }   
+		ADCSRA |= (1<<ADSC);	
+    }
 }
