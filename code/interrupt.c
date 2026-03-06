@@ -8,7 +8,7 @@ ISR(INT0_vect){
     mask ^= 0x01;
     PORTB ^= 0x01;
     _delay_ms(100);
-    while(!(PIND));
+    while(!(PIND & (1 << PIND2)));
 }
 int main(){
     EIMSK |= 0x01;
